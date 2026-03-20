@@ -6,11 +6,11 @@ public readonly record struct ImageRoadMap(
         int HeightOffset,
         int HeightSize,
         bool IsBigEndian,
-        byte[][] SizeMaskOffset,
+        int[][] SizeMaskOffset,
         int SizeOffset
     )
 {
-    private static readonly byte[][] EmptySizeMask = [];
+    private static readonly int[][] EmptySizeMask = [];
 
     public ImageRoadMap(
         int WitdhtOffset,

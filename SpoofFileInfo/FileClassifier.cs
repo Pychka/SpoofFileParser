@@ -68,6 +68,20 @@ public class FileClassifier : IFileClassifier
             0,
             FileType.Audio),
         new(
+            0,
+            [0x47, 0x49, 0x46, 0x38, 0x37, 0x61 ],
+            106889795225927,
+            "gif",
+            0,
+            FileType.Image),
+        new(
+            0,
+            [ 0x47, 0x49, 0x46, 0x38, 0x39, 0x61 ],
+            106898385160519,
+            "gif",
+            0,
+            FileType.Image),
+        new(
             12,
             [ 0x4F, 0x67, 0x67, 0x53 ],
             1399285583,
@@ -215,7 +229,7 @@ public class FileClassifier : IFileClassifier
             return default;
 
         IFileMetadaParser? fileMetadaParser = _parserFactory.Get(extension2.Type);
-        if(fileMetadaParser is null)
+        if (fileMetadaParser is null)
             return default;
 
         return fileMetadaParser.Parse(handle, extension2);
