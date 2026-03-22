@@ -1,0 +1,55 @@
+{
+  "jpg": {
+    "WitdhtOffset": 0,
+    "WitdhtSize": 2,
+    "HeightOffset": 2,
+    "HeightSize": 2,
+    "IsBigEndian": true,
+    "SizeMaskOffset": [
+      "/8A=",
+      "/8E=",
+      "/8I="
+    ],
+    "SizeOffset": 5
+  },
+  "gif": {
+    "WitdhtOffset": 6,
+    "WitdhtSize": 2,
+    "HeightOffset": 8,
+    "HeightSize": 2,
+    "IsBigEndian": false,
+    "SizeMaskOffset": [],
+    "SizeOffset": -1
+  },
+  "jpeg": {
+    "WitdhtOffset": 0,
+    "WitdhtSize": 2,
+    "HeightOffset": 2,
+    "HeightSize": 2,
+    "IsBigEndian": true,
+    "SizeMaskOffset": [
+      "/8A=",
+      "/8E=",
+      "/8I="
+    ],
+    "SizeOffset": 5
+  },
+  "png": {
+    "WitdhtOffset": 16,
+    "WitdhtSize": 4,
+    "HeightOffset": 20,
+    "HeightSize": 4,
+    "IsBigEndian": true,
+    "SizeMaskOffset": [],
+    "SizeOffset": -1
+  },
+  "bmp": {
+    "WitdhtOffset": 18,
+    "WitdhtSize": 4,
+    "HeightOffset": 22,
+    "HeightSize": 4,
+    "IsBigEndian": false,
+    "SizeMaskOffset": [],
+    "SizeOffset": -1
+  }
+}
