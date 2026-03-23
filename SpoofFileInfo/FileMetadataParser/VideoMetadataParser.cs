@@ -13,7 +13,7 @@ public class VideoMetadataParser(ConcurrentDictionary<string, ImageRoadMap> road
     public bool CanParse(FileType type) =>
         type == FileType.Image;
 
-    public IFileMetadata? Parse(SafeFileHandle handle, FileExtension2 extension2)
+    public IFileMetadata? Parse(SafeFileHandle handle, FileExtension extension2)
     {
         if (_roadMaps.TryGetValue(extension2.Name, out ImageRoadMap roadMap))
         {

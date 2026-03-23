@@ -8,5 +8,5 @@ public interface IFileClassifier
     public string? GetExtensionName(SafeFileHandle handle);
     public short GetExtensionId(string filepath);
     public short GetExtensionId(SafeFileHandle handle);
-    public FileExtension2 GetExtension(string filepath);
+    public FileExtension GetExtension(string filepath);
 }

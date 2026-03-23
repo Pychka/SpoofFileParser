@@ -6,5 +6,5 @@ namespace SpoofFileParser.FileMetadataParser;
 public interface IFileMetadaParser
 {
     public bool CanParse(FileType type);
-    public IFileMetadata? Parse(SafeFileHandle handle, FileExtension2 extension2);
+    public IFileMetadata? Parse(SafeFileHandle handle, FileExtension extension2);
 }

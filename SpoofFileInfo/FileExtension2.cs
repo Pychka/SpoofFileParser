@@ -1,6 +1,6 @@
 ﻿namespace SpoofFileParser;
 
-public readonly record struct FileExtension2(
+public readonly record struct ExtensionRoadMap(
         short Id,
         byte[] Magic,
         UInt128 MagicMask,
@@ -9,13 +9,12 @@ public readonly record struct FileExtension2(
         FileType Type,
         byte[] SubMarkerOffset,
         int SubOffset,
-        FileExtension2[] SubMarkers,
-        long Size = -1
+        ExtensionRoadMap[] SubMarkers
     )
 {
-    private static readonly FileExtension2[] EmptyMarkers = [];
+    private static readonly ExtensionRoadMap[] EmptyMarkers = [];
     private static readonly byte[] EmptySubMarkerOffset = [];
-    public FileExtension2(
+    public ExtensionRoadMap(
         short Id,
         byte[] Magic,
         UInt128 MagicMask,
@@ -33,7 +32,7 @@ public readonly record struct FileExtension2(
               -1, 
               EmptyMarkers)
     { }
-    public FileExtension2(
+    public ExtensionRoadMap(
         short Id,
         byte[] Magic,
         UInt128 MagicMask,
@@ -41,7 +40,7 @@ public readonly record struct FileExtension2(
         int Offset,
         FileType Type,
         int SubOffset,
-        FileExtension2[] SubMarkers)
+        ExtensionRoadMap[] SubMarkers)
         : this(
               Id,
               Magic,

@@ -9,8 +9,8 @@ public class FileClassifier : IFileClassifier
 {
     private readonly IParserFactory _parserFactory;
 
-    public FileExtension2[] FileExtensions;
-    public FileClassifier(IParserFactory parserFactory, FileExtension2[] fileExtension2s)
+    public ExtensionRoadMap[] FileExtensions;
+    public FileClassifier(IParserFactory parserFactory, ExtensionRoadMap[] fileExtension2s)
     {
         FileExtensions = fileExtension2s;
         _parserFactory = parserFactory;
@@ -40,7 +40,7 @@ public class FileClassifier : IFileClassifier
 
     public string? GetExtensionName(SafeFileHandle handle)
     {
-        FileExtension2 extension2 = GetExtension(handle);
+        FileExtension extension2 = GetExtension(handle);
         return extension2 == default
             ? null
             : extension2.Name;
@@ -48,13 +48,13 @@ public class FileClassifier : IFileClassifier
 
     public short GetExtensionId(SafeFileHandle handle)
     {
-        FileExtension2 extension2 = GetExtension(handle);
+        FileExtension extension2 = GetExtension(handle);
         return extension2 == default
             ? (short)-1
             : extension2.Id;
     }
 
-    public FileExtension2 GetExtension(string filepath)
+    public FileExtension GetExtension(string filepath)
     {
         using SafeFileHandle handle = File.OpenHandle(
             filepath, FileMode.Open,
@@ -69,7 +69,7 @@ public class FileClassifier : IFileClassifier
             filePath, FileMode.Open,
             FileAccess.Read,
             FileShare.Read);
-        FileExtension2 extension2 = GetExtension(handle);
+        FileExtension extension2 = GetExtension(handle);
         if (extension2 == default)
             return default;
 
@@ -80,14 +80,14 @@ public class FileClassifier : IFileClassifier
         return fileMetadaParser.Parse(handle, extension2);
     }
 
-    public FileExtension2 GetExtension(SafeFileHandle handle)
+    public FileExtension GetExtension(SafeFileHandle handle)
     {
         Span<byte> buffer = stackalloc byte[1024];
         buffer.Clear();
         int bytesRead = RandomAccess.Read(handle, buffer, 0);
         int offset = -1;
         UInt128 mask = 0, subMask = 0;
-        FileExtension2 extension;
+        ExtensionRoadMap extension;
         ReadOnlySpan<byte> fileSpan = buffer[..bytesRead];
 
         for (int i = 0; i < FileExtensions.Length; i++)
@@ -111,9 +111,13 @@ public class FileClassifier : IFileClassifier
                                 fileSpan.IndexOf(extension.SubMarkerOffset) + extension.SubOffset,
                                 16)
                             );
-                            foreach (FileExtension2 subExtension2 in extension.SubMarkers)
+                            foreach (ExtensionRoadMap subExtension2 in extension.SubMarkers)
                                 if ((subMask & subExtension2.MagicMask) == subExtension2.MagicMask)
-                                    return subExtension2 with { Size = RandomAccess.GetLength(handle) };
+                                    return new(
+                                        subExtension2.Id, 
+                                        subExtension2.Name, 
+                                        RandomAccess.GetLength(handle), 
+                                        subExtension2.Type);
                         }
                         else
                         {
@@ -122,16 +126,21 @@ public class FileClassifier : IFileClassifier
                                     extension.SubOffset,
                                     16));
 
-                            foreach (FileExtension2 subExtension2 in extension.SubMarkers)
+                            foreach (ExtensionRoadMap subExtension2 in extension.SubMarkers)
                                 if ((subMask & subExtension2.MagicMask) == subExtension2.MagicMask)
-                                    return subExtension2 with
-                                    {
-                                        Size = RandomAccess.GetLength(handle)
-                                    };
+                                    return new(
+                                        subExtension2.Id,
+                                        subExtension2.Name,
+                                        RandomAccess.GetLength(handle),
+                                        subExtension2.Type);
                         }
                     }
                     else
-                        return extension with { Size = RandomAccess.GetLength(handle) };
+                        return new(
+                                extension.Id,
+                                extension.Name,
+                                RandomAccess.GetLength(handle),
+                                extension.Type);
                 }
             }
         }
