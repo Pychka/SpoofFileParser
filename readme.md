@@ -24,7 +24,7 @@ Soon added parse:
     - Duration.
 
 ## What stage of the project at?
-### While on Alpha 0.0.1 Realized first prototypes parsing of:
+### While on Alpha 0.0.7 Realized first prototypes parsing of:
 - Extension;
 - Specifieds:
     - Image.
